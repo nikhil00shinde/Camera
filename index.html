@@ -34,6 +34,7 @@
       
         promiseToUseCamera.then(function(mediaStream)
         {
+            //lamen terms me mediaStream ek object hai jisme continously camera and mic ka input ara hai and wo input fir maine using objects video me dalra hu
             videoPlayer.srcObject = mediaStream;
             // is object jo bhi mera camera n mic sun raha voh is object mei aa raha hain
             //   laymen term mei mediaStream jo object mil raha hain promise ke through, jiske through jo maine user ka media manga hain voh input mujhe milega
