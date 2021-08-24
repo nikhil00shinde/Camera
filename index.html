@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    
+   <!-- JO MERE CAMERE SE VIDEO AA RAHA VOH MEI IS VEDIO KO DE DOO -->
+
+     <video controls loop autoplay></video>
+     <!-- control -> to pause or move forward or backward etc -->
+     <!-- loop -> When the video is finish start over again (infinitly) -->
+     <!-- autoplay -> Automatically play  -->
+     <!-- src = "" -> link to a video ya fir koi file uska path (we can url using url function url()) -->
+
+    <script>
+         
+         let videoPlayer = document.querySelector("video");
+        // navigator -> it is a object, which is provided by browser
+        //inside navigator we have child object, called "mediaDevices" using this child object we can access the media devices
+        //to get media from user, we use function called "getUserMedia()" inside this function we have to pass object, this object consist of what type of media do you, By default all media are false inside that object
+        //getUserMedia()  -> ae function by default promise return karta hain
+        //promise resolve hone par ek object milta hain mediaStream
+
+        // navigator.mediaDevices.getUserMedia({vedio:true})
+
+        //Agar kbhi bhi humhe wait krna padta hain toh hum PROMISE ka concept use karte hain
+
+        let promiseToUseCamera = navigator.mediaDevices.getUserMedia({video:true,audio:true});
+      
+        promiseToUseCamera.then(function(mediaStream)
+        {
+            videoPlayer.srcObject = mediaStream;
+            // is object jo bhi mera camera n mic sun raha voh is object mei aa raha hain
+            //   laymen term mei mediaStream jo object mil raha hain promise ke through, jiske through jo maine user ka media manga hain voh input mujhe milega
+            //jo mera audio and video hain voh mujhe object mediaStream ke through milenge
+            
+            //promise return mediaStream, which is object ,uske through hamhe audio and vedio bhi milegi
+            // mediaStram object jo humne user se  vedio and audio manga hain voh milega
+            console.log("User has given access to use the camera");
+        }).catch(function()
+        {
+            console.log("Denied");
+        })
+        
+    </script>
+</body>
+</html>
