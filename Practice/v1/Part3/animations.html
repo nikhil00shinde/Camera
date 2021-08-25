@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        body{
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        div{
+            height: 10rem;
+            width: 10rem;
+            background-color: yellow;
+            animation: shrinkDownNUp;
+            animation-duration: 2s;
+            animation-delay: 1s;
+            /* it delay the animation as the page load */
+            animation-fill-mode: forwards; 
+            /* after if we want that last shape of animation we use animation-fill-mode */
+            animation-iteration-count: infinite;
+            /* it will never stop */
+        }
+        @keyframes shrinkDownNUp {
+            0%{
+                transform: scale(1) rotate(180deg);
+                /* scale means size 
+                scale(1) means size of your own */
+                border-radius: 0;
+            }
+            50%{
+                transform: scale(2);
+                /* scale(2) means twice size of your own */
+                border-radius: 50%;
+                /* 50% means to form a circle */
+            }
+            100%{
+                transform: scale(1) rotate(360deg);;
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div></div>
+</body>
+</html>
