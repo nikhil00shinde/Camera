@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        body{
+            margin: 0;
+            overflow: hidden; 
+            /* canvas hamra extra space leta hain */
+        }
+        /* WRONG  -> Paper fhat jata hain esliye css se height and width nhi dete */
+        /* canvas{
+            height: 100vh;
+            width: 100vw;
+        } */
+    </style>
+</head>
+<body>
+    <canvas></canvas>
+    <!-- canvas drawing ke liye use hota hain , browser ne diya hain and browser ek functionality hain  -->
+
+    <script>
+        let canvas = document.querySelector("canvas");
+
+        //window ek object hain jo browser provide karta hain 
+        //window mtlb pura screen hain (white screen)
+        canvas.height = window.innerHeight;
+        canvas.width =  window.innerWidth;
+
+        //toh pehle humhe btana pdta hain ki draw konse isme krna hain 2d ya 3d
+        let tool = canvas.getContext("2d");
+        //ye tool deta using this tool we can do drawing
+        
+        //tool ko btna padtha hain ki hum khse start kare point (x,y)
+        tool.moveTo(0,0);
+
+        //us point se hum ek line draw kar skte hain using lineTo() function se
+        tool.lineTo(400,400);
+
+        //jo line draw ki hain voh sirf memory mei draw hooye hain toh humhe visible ke liye stroke function use krna padega
+        tool.stroke()
+    </script>
+</body>
+</html>
