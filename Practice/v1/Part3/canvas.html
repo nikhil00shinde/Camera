@@ -14,37 +14,34 @@
             overflow: hidden; 
             /* canvas hamra extra space leta hain */
         }
-        /* WRONG  -> Paper fhat jata hain esliye css se height and width nhi dete */
-        /* canvas{
-            height: 100vh;
-            width: 100vw;
-        } */
     </style>
 </head>
 <body>
     <canvas></canvas>
-    <!-- canvas drawing ke liye use hota hain , browser ne diya hain and browser ek functionality hain  -->
 
     <script>
         let canvas = document.querySelector("canvas");
 
-        //window ek object hain jo browser provide karta hain 
-        //window mtlb pura screen hain (white screen)
         canvas.height = window.innerHeight;
         canvas.width =  window.innerWidth;
 
-        //toh pehle humhe btana pdta hain ki draw konse isme krna hain 2d ya 3d
         let tool = canvas.getContext("2d");
-        //ye tool deta using this tool we can do drawing
-        
-        //tool ko btna padtha hain ki hum khse start kare point (x,y)
         tool.moveTo(0,0);
-
-        //us point se hum ek line draw kar skte hain using lineTo() function se
         tool.lineTo(400,400);
 
-        //jo line draw ki hain voh sirf memory mei draw hooye hain toh humhe visible ke liye stroke function use krna padega
         tool.stroke()
+        tool.beginPath()
+        tool.moveTo(400,400);
+        tool.lineTo(600,400);
+        //apply color on line
+        tool.strokeStyle = "red";
+        
+        //to apply line width
+        tool.lineWidth   = "20";
+        tool.stroke();
+
+        //when we use stroke, it start from the path where we started and thus if path is connected or not connected is not matter as long as they are in single path
+        //we can form new path by using tool.beginPath()-> create new path and tool ko uthke bahar rakhta hain.So again we have to use moveTo() to point the point at the page
     </script>
 </body>
 </html>
