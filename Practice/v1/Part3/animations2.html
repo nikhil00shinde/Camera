@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+        /* we can use tranform */
         *{
             box-sizing: border-box;
         }
@@ -62,7 +63,8 @@
                left: 0;
             }
             100%{
-               left: calc(100vw - 10rem);
+                transform: translateX(calc(100vw - 10rem));
+               
             }
         }
         @keyframes  topRightToDown{
@@ -70,7 +72,8 @@
                top: 0;
             }
             100%{
-                top: calc(100vh - 10rem);
+
+                transform: translateY(calc(100vh - 10rem));
             }
         }
         @keyframes  bottomRightToLeft {
@@ -78,7 +81,7 @@
                right: 0;
             }
             100%{
-                right: calc(100vw - 10rem);
+                transform: translateX(calc( -100vw  + 10rem ) );
             }
         }
         @keyframes bottomLeftToTop {
@@ -86,7 +89,7 @@
                bottom: 0;
             }
             100%{
-               bottom: calc(100vh - 10rem);
+                transform: translateY(calc(-100vh + 10rem));
             }
         }
     </style>
