@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        body{
+            margin: 0;
+           /* overflow: hidden; */
+        }
+    </style>
+</head>
+<body>
+    <canvas></canvas>
+    <img src="./img.jpg" alt="">
+</body>
+   <script>
+       //draw image on canvas
+       let canvas = document.querySelector("canvas");
+       let img = document.querySelector("img");
+       canvas.height = window.innerHeight; //for 80% multiply by .8
+       canvas.width = window.innerWidth;
+       
+       let tool = canvas.getContext("2d");
+       
+       //when the img will load call the  attached function
+       img.addEventListener("load",function()
+       {
+           tool.drawImage(img,0,0);
+           //ye function img draw krti hain on canvas,(dx,dy) -> refer to top left & right corner to draw image
+       })
+
+   </script>
+</html>

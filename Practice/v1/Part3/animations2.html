@@ -63,8 +63,10 @@
                left: 0;
             }
             100%{
-                transform: translateX(calc(100vw - 10rem));
-               
+                /* we can unset left property by using "unset" keyword */
+                /* transform: translateX(calc(100vw - 10rem)); */
+               left:unset;
+               right: 0;
             }
         }
         @keyframes  topRightToDown{
