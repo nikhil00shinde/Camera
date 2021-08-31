@@ -5,7 +5,35 @@ let body = document.querySelector("body");
 let mediaRecorder;
 let chunks = [];
 let isRecording = false;
-let isCapture = false;
+
+captureBtn.addEventListener("click",function()
+{
+   let canvas = document.createElement("canvas");
+   //we have to provide the videoHeight and Width to the canvas
+   canvas.height = videoPlayer.videoHeight;
+   canvas.width = videoPlayer.videoWidth;
+   let tool = canvas.getContext("2d");
+   
+   tool.drawImage(videoPlayer,0,0);
+   //draw image take dx,dy wrt to canvas only
+
+   //now we have to create this canvas image to url
+   //but the url will be data url
+   //there are 2 types of url: 1) RESOURCE LOCATOR(address kisi cheej ka)
+                           // 2) ACTUAL DATA(not address) data URL 
+   //we have a function to convert to data url toDataURL() -> it is a actaul data url written in binary 
+   let url = canvas.toDataURL();
+   
+
+   let a = document.createElement("a");
+   a.href = url;
+   a.download = "image.png";
+   a.click();
+   //we are creating url and we download the image through anchor tag but problem ye hain ki jo anchor hain aur jo url bnyi hain voh kuch memory le rahi hain to humhe usey destroy bhi karna hain
+   a.remove();
+})
+
+
 
 recordBtn.addEventListener("click",function(e)
 {
@@ -51,6 +79,7 @@ promiseToUseCamera
         a.href = link;
         a.download = "video.mp4"
         a.click()
+        a.remove();
         chunks = [];
     })
 
