@@ -9,6 +9,18 @@ let isRecording = false;
 
 captureBtn.addEventListener("click",function()
 {
+   let innerSpan = captureBtn.querySelector("span");
+
+   innerSpan.addEventListener("click",function(e)
+   {
+       innerSpan.classList.add("capture-animation");
+
+       setTimeout(function(){
+        innerSpan.classList.remove("capture-animation");
+       },1000);
+   })
+
+
    let canvas = document.createElement("canvas");
    //we have to provide the videoHeight and Width to the canvas
    canvas.height = videoPlayer.videoHeight;
@@ -39,15 +51,18 @@ captureBtn.addEventListener("click",function()
 
 recordBtn.addEventListener("click",function(e)
 {
+    let innerSpan = recordBtn.querySelector("span");
     if(isRecording)
     {
         mediaRecorder.stop();
         isRecording = false;
+        innerSpan.classList.remove("record-animation");
     }
     else
     {
         mediaRecorder.start();
         isRecording = true;
+        innerSpan.classList.add("record-animation");
     }
 })
 
