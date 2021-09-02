@@ -5,6 +5,37 @@ let body = document.querySelector("body");
 let mediaRecorder;
 let chunks = [];
 let isRecording = false;
+let allFilters = document.querySelectorAll(".filter");
+let filter = "";
+//now we have to add filter ui on images and on screen
+
+
+for(let i=0;i<allFilters.length;i++)
+{
+    allFilters[i].addEventListener("click",function(e)
+    {
+        let color  = e.currentTarget.style.backgroundColor;
+        //to check if the previous any filter is present on the screen
+        let previousDiv = document.querySelector(".filter-div");
+        if(previousDiv) previousDiv.remove();
+
+
+        //to add filter we will add div in front of the screen with height and width same size of screnn
+        let div = document.createElement("div");
+        div.classList.add("filter-div");
+        div.style.backgroundColor = color;
+        body.append(div);
+    })
+}
+
+
+
+
+
+
+
+
+
 
 
 captureBtn.addEventListener("click",function()

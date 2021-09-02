@@ -5,12 +5,36 @@ let body = document.querySelector("body");
 let mediaRecorder;
 let chunks = [];
 let isRecording = false;
+let allFilters = document.querySelectorAll(".filter");
+let filter = "";
+//now we have to add filter ui on images and on screen
 
+
+for(let i=0;i<allFilters.length;i++)
+{
+    allFilters[i].addEventListener("click",function(e)
+    {
+        let color  = e.currentTarget.style.backgroundColor;
+        //to check if the previous any filter is present on the screen
+        let previousDiv = document.querySelector(".filter-div");
+        //if present remove previous filter
+        if(previousDiv) previousDiv.remove();
+
+        //to add filter we will add div in front of the screen with height and width same size of screnn
+        let div = document.createElement("div");
+        div.classList.add("filter-div");
+        filter = color;
+        div.style.backgroundColor = color;
+        body.append(div);
+    })
+}
+
+//now we added the filter on screen but now we have add filter on the photo that we going to capture
 
 captureBtn.addEventListener("click",function()
 {
    let innerSpan = captureBtn.querySelector("span");
-
+   
    innerSpan.addEventListener("click",function(e)
    {
        innerSpan.classList.add("capture-animation");
@@ -28,6 +52,13 @@ captureBtn.addEventListener("click",function()
    let tool = canvas.getContext("2d");
    
    tool.drawImage(videoPlayer,0,0);
+    //for adding filter in photo we will draw rectangle in canvas
+    //first check if filter is present 
+    if(filter != "")
+    {
+        tool.fillStyle = filter;
+        tool.fillRect(0,0,canvas.width,canvas.height);
+    }
    //draw image take dx,dy wrt to canvas only
 
    //now we have to create this canvas image to url
@@ -51,6 +82,12 @@ captureBtn.addEventListener("click",function()
 
 recordBtn.addEventListener("click",function(e)
 {
+    //in video recording part we will not able to add filter
+    let previousDiv = document.querySelector(".filter-div");
+    // While recording if filter is present remove the filter 
+    if(previousDiv) previousDiv.remove();
+    filter = "";
+
     let innerSpan = recordBtn.querySelector("span");
     if(isRecording)
     {

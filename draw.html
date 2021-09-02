@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+   <style>
+       *{
+           box-sizing: border-box;
+       }
+       body{
+           margin: 0;
+       }
+       canvas{
+           overflow: hidden;
+       }
+   </style>
+<body>
+    <canvas></canvas>
+
+    <script>
+
+        //In canvas that how we can draw a rectangle
+        let canvas = document.querySelector("canvas");
+        canvas.height = window.innerHeight;
+        canvas.width = window.innerWidth;
+        let tool = canvas.getContext("2d");
+        
+        //by deafault fill style color is black
+        tool.fillStyle = "red";
+        tool.fillRect(0,0,500,200)
+    </script>
+</body>
+</html>
