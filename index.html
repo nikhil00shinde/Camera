@@ -5,80 +5,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="stylesheet" href="style.css">
   </head>
+  
   <body>
-    <video controls loop autoplay></video>
-    <button id="record">Record</button>
-    <script>
-      let videoPlayer = document.querySelector("video");
-      let recordBtn = document.querySelector("#record");
-      let mediaRecorder;
-      let chunks = [];
-      let isRecording = false;
+    <div class="video-container">
+        <video autoplay></video>
+    </div>
 
-      recordBtn.addEventListener("click",function(e)
-      {
-           if(isRecording)
-           {
-               //recording ko stop krna h
-              //it will start where stop event applied on mediaRecorder
-               mediaRecorder.stop();
-                isRecording = false;
-           }
-           else
-           {
-               //recording shuru krni hai
-                mediaRecorder.start();
-                isRecording = true;
-           }
-      })
+    <button id="record"><span></span></button>
+    <button id="capture"><span></span></button>
+    <script src="script.js"> </script>
+    <div class="filters">
+      <div class="filter" style="background-color: #fab0a055;"></div>
+      <div class="filter" style="background-color: #a29bfe4b;"></div>
+      <div class="filter" style="background-color: #2d34368f;"></div>
+      <div class="filter" style="background-color: #eb30064b;"></div>
+      <div class="filter"></div>
       
+      <div class="zoom">
+        <div class="in">+</div>
+        <div class="out">-</div>
+       </div>
 
-
-      let promiseToUseCamera = navigator.mediaDevices.getUserMedia({
-        video: true,
-        audio: true,
-      });
-
-      promiseToUseCamera
-        .then(function (mediaStream) {
-
-         // lamen terms me mediaStream ek object hai jisme continously camera and mic ka input ara hai and wo input fir maine using objects video me dalra hu
-          videoPlayer.srcObject = mediaStream;
-
-        //  to record the input coming from mediaStream we have function MediaRecorder() which will use mediaStream and gives object (mediaRecorder) which is object and using that object we can record input from mediaStream
-
-        //mediaRecorder have events -> data available
-                                // ->  stop
-        // the video will record in chunks so we will array to store chunks and later use blob to combine and form a single raw file as mp4
-         mediaRecorder = new MediaRecorder(mediaStream);
-
-
-         mediaRecorder.addEventListener("dataavailable",function(e)
-         {
-             chunks.push(e.data);
-         })
-
-         mediaRecorder.addEventListener("stop",function(e)
-         {
-             let blob = new Blob(chunks,{type:"video/mp4"});
-             //Blob -> large raw file
-             //web mei humhe large file chahiye toh usey hum blob bolte hain  
-            
-              let link = URL.createObjectURL(blob);//kisi tarike se blob ki link bnadi h
-              
-             //in download process we use anchor tag
-             let a = document.createElement("a");
-             a.href = link;
-             a.download = "video.mp4"
-             a.click()
-             chunks = [];
-         })
-
-        })
-        .catch(function () {
-          console.log("user has denied the access of camera");
-        });
-    </script>
+    </div>
   </body>
 </html>
