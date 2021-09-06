@@ -67,7 +67,7 @@ button span{
   background-size: cover;
   /* we want image to be cover or contain */
   /* -> cover -> take the whole box */
-  /* contain -> whole should be shown in  box */
+  /* contain -> whole image should be shown in  box */
 
 
   /* to show background color on the image */
