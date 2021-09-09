@@ -13,10 +13,23 @@ let tempData = [
 
 viewBtn.addEventListener("click",function()
 {
+    let tx = db.transaction("csNotes","readonly");
+
+
+    let csNotesObjectStore = tx.objectStore("csNotes");
+    //get csNotes Object Store
+    
+    let req = csNotesObjectStore.openCursor();
+    //now to get request to pointer of first JS Object, in object store
+
+    let serialNumber = 1;
+    
+    
     table.innerHTML = ` <thead>
                             <tr>
                                 <th>Sr No.</th>
                                 <th>Note</th>
+                                <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -24,19 +37,29 @@ viewBtn.addEventListener("click",function()
                         </tbody>`;
 
     let tbody = table.querySelector("tbody");
-    
-    for(let i=0;i<tempData.length;i++)
-    {
-    
-        let tr = document.createElement("tr"); 
-        tr.innerHTML = `<td>${i+1}</td>
-        <td>${tempData[i].note}</td>`;
-        tbody.append(tr);
-    }
-})
 
 
+    req.addEventListener("success",function(e){
+        let cursor = req.result;
+        // now we will get pointer to first js object
+        
+        // if their is no js object in object store the cursor will be empty
+        if(cursor)
+        {
+            let curObj = cursor.value;
 
+            let tr = document.createElement("tr"); 
+            tr.innerHTML = `<td>${serialNumber}</td>
+            <td>${curObj.note}</td>
+            <td><button>Delete</button></td>`;
+
+            tbody.append(tr);
+            serialNumber++;
+             cursor.continue();
+            //  it will make request to point to next object and it will assign request to req variable
+        }
+    })
+});
 
 addBtn.addEventListener("click",function(e)
 {
