@@ -1,7 +1,41 @@
 let openBtn = document.querySelector("#open");
 let addBtn = document.querySelector("#add");
 let input = document.querySelector("input");
+let table = document.querySelector("table");
+let viewBtn = document.querySelector("#view");
 let db;
+
+let tempData = [
+  { cId: 2423534534, note: "this is note 1" },
+  { cId: 2426634534, note: "this is note2" },
+  { cId: 2113534534, note: "this is note 3" },
+]
+
+viewBtn.addEventListener("click",function()
+{
+    table.innerHTML = ` <thead>
+                            <tr>
+                                <th>Sr No.</th>
+                                <th>Note</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>`;
+
+    let tbody = table.querySelector("tbody");
+    
+    for(let i=0;i<tempData.length;i++)
+    {
+    
+        let tr = document.createElement("tr"); 
+        tr.innerHTML = `<td>${i+1}</td>
+        <td>${tempData[i].note}</td>`;
+        tbody.append(tr);
+    }
+})
+
+
 
 
 addBtn.addEventListener("click",function(e)
