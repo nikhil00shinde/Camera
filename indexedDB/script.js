@@ -11,8 +11,20 @@ let tempData = [
   { cId: 2113534534, note: "this is note 3" },
 ]
 
-viewBtn.addEventListener("click",function()
+viewBtn.addEventListener("click",function(e)
 {
+//    to check if the table is open or not
+    let isOpen = e.currentTarget.getAttribute("data-open");
+    
+    if(isOpen == "true")
+    {
+        e.currentTarget.setAttribute("data-open","false");
+        table.innerHTML = "";
+        return;
+    }
+   
+    e.currentTarget.setAttribute("data-open","true");
+
     let tx = db.transaction("csNotes","readonly");
 
 
@@ -51,14 +63,23 @@ viewBtn.addEventListener("click",function()
             let tr = document.createElement("tr"); 
             tr.innerHTML = `<td>${serialNumber}</td>
             <td>${curObj.note}</td>
-            <td><button>Delete</button></td>`;
-
+            <td><button data-cId="${curObj.cId}">Delete</button></td>`;
             tbody.append(tr);
             serialNumber++;
+
+            let button = tr.querySelector("button");
+
+            button.addEventListener("click",function(e)
+            {
+                let cId = Number(e.currentTarget.getAttribute("data-cId"));
+                deleteNote(cId);
+                e.currentTarget.parentElement.parentElement.remove();
+            })
              cursor.continue();
             //  it will make request to point to next object and it will assign request to req variable
         }
     })
+
 });
 
 addBtn.addEventListener("click",function(e)
@@ -120,7 +141,15 @@ openBtn.addEventListener("click",function()
 
 
 
+//delete from indexedDb 
+function deleteNote(cId)
+{
+    let tx = db.transaction("csNotes","readwrite");
 
+    let csNotesObjectStore = tx.objectStore("csNotes");
+
+    csNotesObjectStore.delete(cId);
+}
 
 
 
