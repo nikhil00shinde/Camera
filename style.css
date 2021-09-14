@@ -32,6 +32,11 @@ button{
 #capture{
     top: 60vh;
 }
+#gallery{
+  bottom: 4rem;
+  color: white;
+  font-size: 1.1rem;
+}
 
 button span{
   display: inline-block;

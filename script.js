@@ -6,11 +6,22 @@ let mediaRecorder;
 let chunks = [];
 let isRecording = false;
 let allFilters = document.querySelectorAll(".filter");
-let filter = "";
 let zoomin = document.querySelector(".in");
 let zoomout = document.querySelector(".out");
+let galleryBtn  = document.querySelector("#gallery"); 
+
 let currZoom = 1; //min 1 and max 3
-//now in these we have to add zoomin/out
+let filter = "";
+
+//now we are gallery funtionality
+galleryBtn.addEventListener("click",function(e)
+{
+    location.assign("gallery.html");
+    //it add path given in assign function infront of domain
+
+    // 127.0.0.1 ->domain name
+    // gallery.html -> path name
+})
 
 zoomin.addEventListener("click",function(e)
 {
@@ -99,15 +110,17 @@ captureBtn.addEventListener("click",function()
                            // 2) ACTUAL DATA(not address) data URL 
    //we have a function to convert to data url toDataURL() -> it is a actaul data url written in binary 
    let url = canvas.toDataURL();
-   
-
-   let a = document.createElement("a");
-   a.href = url;
-   a.download = "image.png";
-   a.click();
-   //we are creating url and we download the image through anchor tag but problem ye hain ki jo anchor hain aur jo url bnyi hain voh kuch memory le rahi hain to humhe usey destroy bhi karna hain
    canvas.remove();
-   a.remove();
+   
+   //to save image url in indexedDb
+   saveMedia(url);
+   
+//    let a = document.createElement("a");
+//    a.href = url;
+//    a.download = "image.png";
+//    a.click();
+//    //we are creating url and we download the image through anchor tag but problem ye hain ki jo anchor hain aur jo url bnyi hain voh kuch memory le rahi hain to humhe usey destroy bhi karna hain
+//    a.remove();
 })
 
 
@@ -160,15 +173,16 @@ promiseToUseCamera
     mediaRecorder.addEventListener("stop",function(e)
     {
         let blob = new Blob(chunks,{type:"video/mp4"});
+        
+        saveMedia(blob);
+        
+        // let link = URL.createObjectURL(blob);
 
-    
-        let link = URL.createObjectURL(blob);
-    
-        let a = document.createElement("a");
-        a.href = link;
-        a.download = "video.mp4"
-        a.click()
-        a.remove();
+        // let a = document.createElement("a");
+        // a.href = link;
+        // a.download = "video.mp4"
+        // a.click()
+        // a.remove();
         chunks = [];
     })
 
