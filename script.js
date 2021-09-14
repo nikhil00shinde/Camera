@@ -7,7 +7,27 @@ let chunks = [];
 let isRecording = false;
 let allFilters = document.querySelectorAll(".filter");
 let filter = "";
-//now we have to add filter ui on images and on screen
+let zoomin = document.querySelector(".in");
+let zoomout = document.querySelector(".out");
+let currZoom = 1; //min 1 and max 3
+//now in these we have to add zoomin/out
+
+zoomin.addEventListener("click",function(e)
+{
+    currZoom = currZoom + 0.1;
+    if(currZoom > 3) currZoom = 3;
+     
+    videoPlayer.style.transform = `scale(${currZoom})`;
+})
+
+
+zoomout.addEventListener("click",function(e)
+{
+    currZoom = currZoom - 0.1;
+    if(currZoom < 1) currZoom = 1;
+     
+    videoPlayer.style.transform = `scale(${currZoom})`;
+})
 
 
 for(let i=0;i<allFilters.length;i++)
@@ -51,6 +71,18 @@ captureBtn.addEventListener("click",function()
    canvas.width = videoPlayer.videoWidth;
    let tool = canvas.getContext("2d");
    
+
+   //before drawing the image we have to shift the origin from top-left to center
+   //so that we can scale wrt origin(center) and the image inside that is within canvas border is visible 
+
+   //origin shift from top-left to center
+   tool.translate(canvas.width/2,canvas.height/2);
+   //zoom basically strech kra canvas ka paper
+   tool.scale(currZoom,currZoom);
+   //wapis top left pr le aye origin ko
+   tool.translate(-canvas.width/2,-canvas.height/2);
+
+
    tool.drawImage(videoPlayer,0,0);
     //for adding filter in photo we will draw rectangle in canvas
     //first check if filter is present 
@@ -97,6 +129,9 @@ recordBtn.addEventListener("click",function(e)
     }
     else
     {
+        //zoom functionality is only applicable to image not for video
+        currZoom = 1;
+        videoPlayer.style.transform = `scale(${currZoom})`;
         mediaRecorder.start();
         isRecording = true;
         innerSpan.classList.add("record-animation");
