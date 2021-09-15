@@ -1,5 +1,13 @@
 let req = indexedDB.open("gallery",1);
 let database;
+let numberOfMedia = 0;
+
+let backBtn = document.querySelector("#back");
+
+backBtn.addEventListener("click",function(e)
+{
+    location.assign("index.html");
+})
 
 
 req.addEventListener("success",function(){
@@ -50,6 +58,8 @@ function viewMedia()
 
         if(cursor)
         {
+           numberOfMedia++;
+
             let mediaCard = document.createElement("div");
             mediaCard.classList.add("media-card");
 
@@ -73,6 +83,9 @@ function viewMedia()
                 //removing from ui
                 e.currentTarget.parentElement.parentElement.remove();
             })
+            
+            //we have to download the image and video 
+            let downloadBtn = mediaCard.querySelector(".media-download");
 
             let actualMediaDiv = mediaCard.querySelector(".actual-media");
 
@@ -84,7 +97,14 @@ function viewMedia()
 
                 let image = document.createElement("img");
                 image.src = data;
-                
+
+                //when we want to download image or video we have to specify whether it's a image or video
+
+                downloadBtn.addEventListener("click",function(e)
+                {
+                    downloadMedia(data,"image");
+                })
+
                 actualMediaDiv.append(image);
             }
             else if(type == "object")
@@ -94,6 +114,12 @@ function viewMedia()
                 let video = document.createElement("video");
 
                 let url = URL.createObjectURL(data);
+               
+                //download video
+                downloadBtn.addEventListener("click",function(e)
+                {
+                    downloadMedia(url,"video");
+                })
 
                 video.src = url;
 
@@ -110,6 +136,13 @@ function viewMedia()
 
             cursor.continue();
         }
+        else
+        {
+            if(numberOfMedia == 0)
+            {
+                galleryContainer.innerText = "No Media Found";
+            }
+        }
     })
 };
 
@@ -119,4 +152,23 @@ function deleteMedia(mId)
     let mediaObjectStore = tx.objectStore("media");
 
     mediaObjectStore.delete(mId);
+}
+
+function  downloadMedia(url,type)
+{
+    let anchor = document.createElement("a");
+
+    anchor.href = url;
+    
+    if(type == "image")
+    {
+      anchor.download = "image.png";
+    }
+    else
+    {
+      anchor.download = "video.mp4";
+    }
+
+    anchor.click();
+    anchor.remove();
 }
