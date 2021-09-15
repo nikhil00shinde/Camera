@@ -57,11 +57,22 @@ function viewMedia()
                             <div class="actual-media"></div>
                             <div class="media-buttons">
                                 <button class="media-download">Download</button>
-                                <button class="media-delete">Delete</button>
+                                <button data-mid = ${cursor.value.mId} class="media-delete">Delete</button>
                             </div>`;
 
             let data = cursor.value.mediaData;
+            
+            //adding event listener to delete it from ui and databse
+            let deleteBtn = mediaCard.querySelector(".media-delete");
 
+            deleteBtn.addEventListener("click",function(e)
+            {
+                //removing from database
+                let id = Number(e.currentTarget.getAttribute("data-mid"));
+                deleteMedia(id);
+                //removing from ui
+                e.currentTarget.parentElement.parentElement.remove();
+            })
 
             let actualMediaDiv = mediaCard.querySelector(".actual-media");
 
@@ -100,4 +111,12 @@ function viewMedia()
             cursor.continue();
         }
     })
+};
+
+function deleteMedia(mId)
+{
+    let tx = database.transaction("media","readwrite");
+    let mediaObjectStore = tx.objectStore("media");
+
+    mediaObjectStore.delete(mId);
 }

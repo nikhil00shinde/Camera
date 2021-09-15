@@ -13,7 +13,7 @@ let galleryBtn  = document.querySelector("#gallery");
 let currZoom = 1; //min 1 and max 3
 let filter = "";
 
-//now we are gallery funtionality
+//now we are gallery funtionality with working of delete and download button
 galleryBtn.addEventListener("click",function(e)
 {
     location.assign("gallery.html");
